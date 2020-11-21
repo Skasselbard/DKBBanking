@@ -19,6 +19,7 @@ class Entry:
     type = ""
     referenz = ""
     betrag = ""
+    betreff = ""
 
     def __repr__(self):
         return \
@@ -26,7 +27,8 @@ class Entry:
             "\nwertstellung: " + self.wertstellung + \
             "\ntype: " + self.type + \
             "\nreferenz: " + self.referenz + \
-            "\nbetrag: " + self.betrag
+            "\nbetrag: " + self.betrag + \
+            "\nbetreff: " + self.betreff
 
 
 def amount():
@@ -97,7 +99,7 @@ def get_entrys():
             # do not strip this line! (messes up the sign of amount)
             entry.append(line)
             j = i+1
-            while (not re.search(entry_end(), lines[j])) and lines[j].strip() != "\n":
+            while (not re.search(entry_end(), lines[j])) and lines[j] != "\n":
                 entry.append(lines[j].strip())
                 j += 1
             entries.append(format_entry(entry))
@@ -106,28 +108,45 @@ def get_entrys():
 
 def format_entry(entry):
     formated = Entry()
+    # type
+    ty = entry[0].split()[2]
+    # betrag
     betrag = re.search(amount(), entry[0])
     if betrag.end() == negative_end:
         betrag = "-" + betrag.group()
     else:
         betrag = betrag.group()
+    # dates
+    dates = re.findall(date(), entry[0])
+    # betreff
+    betreff = ""
+    for i in range(2, len(entry)):
+        betreff = betreff + " " + entry[i].strip()
+    # print(dates)
+    formated.type = ty
+    formated.buchung = dates[0]
+    formated.wertstellung = dates[1]
     formated.betrag = betrag
     formated.referenz = entry[1]
+    formated.betreff = betreff
     return formated
 
 
-def old_balance(lines):
+def old_balance():
     return re.search(amount(), get_line("ALTER KONTOSTAND")).group()
 
 
-def new_balance(lines):
+def new_balance():
     return re.search(amount(), get_line("NEUER KONTOSTAND")).group()
 
 
+def year():
+    return re.search(amount(), get_line("Kontoauszug Nummer")).group()
+
+
 os.system("pdftotext -layout " + filepath + " " + tempFile)
-lines = open(tempFile, 'r').readlines()
-print(old_balance(lines))
-print(new_balance(lines))
+print(old_balance())
+print(new_balance())
 entries = get_entrys()
 pprint(entries)
 print(len(entries))

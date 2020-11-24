@@ -3,3 +3,4 @@ cridentials.ini
 data/*
 .vscode/*
 tmp.txt
+readConfig.pyc

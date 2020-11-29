@@ -11,17 +11,12 @@ Some sample parameters:
 
 It is expected that the statement file names are as exported from the DKB online Banking. If they don't match they are ignored (and such errors are currently not handled understandable).
 
-<<<<<<< HEAD
-=======
 ## Software Prerequisites
 
 - [pdftotext](https://www.xpdfreader.com/pdftotext-man.html)
 - python3
 - python influx client ``pip3 install influxdb``
 - regex ``pip3 install regex``
-<<<<<<< HEAD
->>>>>>> e7591ec... influx and refactoring
-=======
 - influxdb server
 
 ## Grafana Sample 
@@ -29,4 +24,3 @@ It is expected that the statement file names are as exported from the DKB online
 In doc/grafana is a grafana sample which displays the data like seen in the pictures below. This might be a good start to make a more sophisticated representation
 ![graphana dashboard](doc/pics/Grafana_Konto.png)
 ![graphana dashboard](doc/pics/Grafana_Konto2.png)
->>>>>>> 94188d6... working parser

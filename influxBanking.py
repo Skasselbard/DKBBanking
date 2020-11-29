@@ -50,7 +50,13 @@ def write_konto_entries(document):
     get_client().write_points(entries)
 
 
-def drop_dbs():
+def drop_db():
+    client = InfluxDBClient(host, port, database=None,
+                            username=user, password=password, ssl=ssl)
+    client.drop_database(db)
+
+
+def drop_all_dbs():
     client = InfluxDBClient(host, port, database=None,
                             username=user, password=password, ssl=ssl)
     db_list = client.get_list_database()
@@ -123,6 +129,6 @@ if __name__ == "__main__":
         db = args.db
 
     if args.delete:
-        drop_dbs()
+        drop_db()
     check_database()
     parse_and_write(path)

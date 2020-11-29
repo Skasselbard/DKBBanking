@@ -1,5 +1,5 @@
 def amount_rx():
-    return "(\d*\.)*\d*,\d*"
+    return "(\d+\.)*\d+(,\d+)"
 
 
 def dot_rx():
@@ -26,12 +26,18 @@ def words_rx():
     return word_rx() + "( " + word_rx() + ")*"
 
 
-def date_rx():
+def short_date_rx():
+    # dd.mm.
     return digit_rx() + digit_rx() + dot_rx() + digit_rx() + digit_rx() + dot_rx()
 
 
+def long_date_rx():
+    # dd.mm.yyyy
+    return digit_rx() + digit_rx() + dot_rx() + digit_rx() + digit_rx() + dot_rx() + digit_rx() + digit_rx() + digit_rx() + digit_rx()
+
+
 def entry_start_rx():
-    return date_rx() + whitespace_rx() + date_rx() + whitespace_rx() + word_rx() + whitespace_rx() + amount_rx()
+    return short_date_rx() + whitespace_rx() + short_date_rx() + whitespace_rx() + words_rx() + whitespace_rx() + amount_rx()
 
 
 def entry_end_rx():

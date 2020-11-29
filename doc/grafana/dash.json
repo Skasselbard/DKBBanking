@@ -1,0 +1,669 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": "-- Grafana --",
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "id": 1,
+    "links": [],
+    "panels": [
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "decimals": 2,
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 6,
+                "w": 23,
+                "x": 0,
+                "y": 0
+            },
+            "hiddenSeries": false,
+            "id": 4,
+            "legend": {
+                "alignAsTable": true,
+                "avg": true,
+                "current": true,
+                "hideEmpty": false,
+                "hideZero": false,
+                "max": true,
+                "min": true,
+                "rightSide": false,
+                "show": true,
+                "sideWidth": null,
+                "total": false,
+                "values": true
+            },
+            "lines": true,
+            "linewidth": 2,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": true,
+            "targets": [
+                {
+                    "alias": "balance",
+                    "groupBy": [],
+                    "hide": false,
+                    "measurement": "transaction",
+                    "orderByTime": "ASC",
+                    "policy": "default",
+                    "query": "SELECT \"cumulative_sum\" FROM (SELECT cumulative_sum(\"value\") FROM \"transaction\")",
+                    "rawQuery": true,
+                    "refId": "A",
+                    "resultFormat": "time_series",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "field"
+                            },
+                            {
+                                "params": [],
+                                "type": "cumulative_sum"
+                            }
+                        ]
+                    ],
+                    "tags": []
+                },
+                {
+                    "alias": "average",
+                    "groupBy": [
+                        {
+                            "params": [
+                                "$__interval"
+                            ],
+                            "type": "time"
+                        },
+                        {
+                            "params": [
+                                "null"
+                            ],
+                            "type": "fill"
+                        }
+                    ],
+                    "hide": true,
+                    "measurement": "transaction",
+                    "orderByTime": "ASC",
+                    "policy": "default",
+                    "query": "SELECT moving_average(cumulative_sum(sum(\"value\")), 40) FROM \"transaction\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
+                    "rawQuery": true,
+                    "refId": "B",
+                    "resultFormat": "time_series",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "field"
+                            },
+                            {
+                                "params": [],
+                                "type": "sum"
+                            },
+                            {
+                                "params": [],
+                                "type": "cumulative_sum"
+                            },
+                            {
+                                "params": [
+                                    "40"
+                                ],
+                                "type": "moving_average"
+                            }
+                        ]
+                    ],
+                    "tags": []
+                }
+            ],
+            "thresholds": [
+                {
+                    "colorMode": "warning",
+                    "fill": false,
+                    "line": true,
+                    "op": "lt",
+                    "value": 1000,
+                    "yaxis": "left"
+                },
+                {
+                    "colorMode": "critical",
+                    "fill": false,
+                    "line": true,
+                    "op": "lt",
+                    "value": 0,
+                    "yaxis": "left"
+                }
+            ],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Panel Title",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "transparent": true,
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "decimals": 2,
+                    "format": "currencyEUR",
+                    "label": "",
+                    "logBase": 1,
+                    "max": null,
+                    "min": "-500",
+                    "show": true
+                },
+                {
+                    "format": "currencyEUR",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": false
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": 12
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": true,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "InfluxDB",
+            "fill": 0,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 9,
+                "w": 23,
+                "x": 0,
+                "y": 6
+            },
+            "hiddenSeries": false,
+            "id": 2,
+            "legend": {
+                "alignAsTable": true,
+                "avg": false,
+                "current": false,
+                "max": true,
+                "min": true,
+                "rightSide": true,
+                "show": true,
+                "total": true,
+                "values": true
+            },
+            "lines": false,
+            "linewidth": 3,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pluginVersion": "6.7.4",
+            "pointradius": 2,
+            "points": true,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "alias": "[[tag_reference]]",
+                    "groupBy": [
+                        {
+                            "params": [
+                                "reference"
+                            ],
+                            "type": "tag"
+                        }
+                    ],
+                    "hide": false,
+                    "limit": "",
+                    "measurement": "transaction",
+                    "orderByTime": "ASC",
+                    "policy": "Infinite",
+                    "query": "SELECT \"value\" FROM \"Infinite\".\"transaction\" WHERE (\"value\" > 0) AND $timeFilter GROUP BY \"reference\"",
+                    "rawQuery": false,
+                    "refId": "C",
+                    "resultFormat": "time_series",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "field"
+                            }
+                        ]
+                    ],
+                    "tags": [
+                        {
+                            "key": "value",
+                            "operator": ">",
+                            "value": "0"
+                        }
+                    ],
+                    "tz": ""
+                },
+                {
+                    "alias": "[[tag_reference]]",
+                    "groupBy": [
+                        {
+                            "params": [
+                                "reference"
+                            ],
+                            "type": "tag"
+                        }
+                    ],
+                    "hide": false,
+                    "limit": "",
+                    "measurement": "transaction",
+                    "orderByTime": "ASC",
+                    "policy": "Infinite",
+                    "query": "SELECT \"value\" FROM \"Infinite\".\"transaction\" WHERE (\"value\" < 0) AND $timeFilter GROUP BY \"reference\"",
+                    "rawQuery": false,
+                    "refId": "D",
+                    "resultFormat": "time_series",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "field"
+                            }
+                        ]
+                    ],
+                    "tags": [
+                        {
+                            "key": "value",
+                            "operator": "<",
+                            "value": "0"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Panel Title",
+            "tooltip": {
+                "shared": false,
+                "sort": 1,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "decimals": 0,
+                    "format": "currencyEUR",
+                    "label": "",
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "columns": [],
+            "datasource": null,
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 20,
+                "w": 8,
+                "x": 0,
+                "y": 15
+            },
+            "id": 6,
+            "pageSize": null,
+            "showHeader": true,
+            "sort": {
+                "col": null,
+                "desc": false
+            },
+            "styles": [
+                {
+                    "alias": "To",
+                    "align": "auto",
+                    "dateFormat": "DD.MM.YYYY",
+                    "pattern": "Time",
+                    "type": "date"
+                },
+                {
+                    "alias": "From",
+                    "align": "right",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "DD.MM.YYYY",
+                    "decimals": 2,
+                    "link": false,
+                    "pattern": "from_date",
+                    "thresholds": [],
+                    "type": "date",
+                    "unit": "short"
+                },
+                {
+                    "alias": "New Balance",
+                    "align": "right",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "new_balance",
+                    "thresholds": [],
+                    "type": "number",
+                    "unit": "none"
+                },
+                {
+                    "alias": "Old Balance",
+                    "align": "right",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "old_balance",
+                    "thresholds": [],
+                    "type": "number",
+                    "unit": "none"
+                },
+                {
+                    "alias": "",
+                    "align": "right",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "/.*/",
+                    "thresholds": [],
+                    "type": "string",
+                    "unit": "short"
+                }
+            ],
+            "targets": [
+                {
+                    "groupBy": [
+                        {
+                            "params": [
+                                "$__interval"
+                            ],
+                            "type": "time"
+                        },
+                        {
+                            "params": [
+                                "null"
+                            ],
+                            "type": "fill"
+                        }
+                    ],
+                    "measurement": "statement",
+                    "orderByTime": "ASC",
+                    "policy": "default",
+                    "query": "SELECT * FROM \"statement\" WHERE $timeFilter",
+                    "rawQuery": true,
+                    "refId": "A",
+                    "resultFormat": "table",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "field"
+                            },
+                            {
+                                "params": [],
+                                "type": "mean"
+                            }
+                        ]
+                    ],
+                    "tags": []
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Panel Title",
+            "transform": "table",
+            "type": "table"
+        },
+        {
+            "cacheTimeout": null,
+            "columns": [],
+            "datasource": null,
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 21,
+                "w": 15,
+                "x": 8,
+                "y": 15
+            },
+            "id": 8,
+            "links": [],
+            "pageSize": null,
+            "pluginVersion": "6.7.4",
+            "showHeader": true,
+            "sort": {
+                "col": 0,
+                "desc": true
+            },
+            "styles": [
+                {
+                    "alias": "Wertstellung",
+                    "align": "auto",
+                    "dateFormat": "DD.MM.YYYY",
+                    "pattern": "Time",
+                    "type": "date"
+                },
+                {
+                    "alias": "Betreff",
+                    "align": "",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "purpose",
+                    "preserveFormat": false,
+                    "sanitize": false,
+                    "thresholds": [],
+                    "type": "string",
+                    "unit": "short",
+                    "valueMaps": []
+                },
+                {
+                    "alias": "Buchung",
+                    "align": "auto",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "DD.MM.YYYY",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "booking_date",
+                    "thresholds": [],
+                    "type": "date",
+                    "unit": "short"
+                },
+                {
+                    "alias": "Betrag",
+                    "align": "auto",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "value",
+                    "thresholds": [],
+                    "type": "number",
+                    "unit": "currencyEUR"
+                }
+            ],
+            "targets": [
+                {
+                    "groupBy": [
+                        {
+                            "params": [
+                                "$__interval"
+                            ],
+                            "type": "time"
+                        },
+                        {
+                            "params": [
+                                "null"
+                            ],
+                            "type": "fill"
+                        }
+                    ],
+                    "measurement": "transaction",
+                    "orderByTime": "ASC",
+                    "policy": "default",
+                    "query": "SELECT \"type\", \"reference\", \"value\", \"booking_date\", \"purpose\" FROM \"transaction\" WHERE $timeFilter",
+                    "rawQuery": true,
+                    "refId": "B",
+                    "resultFormat": "table",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "field"
+                            },
+                            {
+                                "params": [],
+                                "type": "mean"
+                            }
+                        ]
+                    ],
+                    "tags": []
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Panel Title",
+            "transform": "table",
+            "type": "table"
+        }
+    ],
+    "refresh": false,
+    "schemaVersion": 22,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+        "list": []
+    },
+    "time": {
+        "from": "2012-10-19T20:06:38.128Z",
+        "to": "2013-01-06T20:01:01.001Z"
+    },
+    "timepicker": {
+        "refresh_intervals": [
+            "5s",
+            "10s",
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+        ]
+    },
+    "timezone": "browser",
+    "title": "Konto",
+    "uid": "8SW8LCTMz",
+    "variables": {
+        "list": []
+    },
+    "version": 28
+}

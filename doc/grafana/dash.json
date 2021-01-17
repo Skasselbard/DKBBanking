@@ -206,6 +206,181 @@
         {
             "aliasColors": {},
             "bars": true,
+            "cacheTimeout": null,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 10,
+                "w": 23,
+                "x": 0,
+                "y": 6
+            },
+            "hiddenSeries": false,
+            "id": 10,
+            "legend": {
+                "alignAsTable": true,
+                "avg": true,
+                "current": false,
+                "max": true,
+                "min": true,
+                "rightSide": false,
+                "show": true,
+                "total": false,
+                "values": true
+            },
+            "lines": false,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pluginVersion": "6.7.4",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+                {
+                    "alias": "moving avg über 5 4 wochen perioden",
+                    "bars": false,
+                    "lines": true
+                }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "alias": "4 wochen ausgaben",
+                    "groupBy": [
+                        {
+                            "params": [
+                                "4w"
+                            ],
+                            "type": "time"
+                        }
+                    ],
+                    "hide": false,
+                    "measurement": "transaction",
+                    "orderByTime": "ASC",
+                    "policy": "default",
+                    "refId": "B",
+                    "resultFormat": "time_series",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "field"
+                            },
+                            {
+                                "params": [],
+                                "type": "sum"
+                            }
+                        ]
+                    ],
+                    "tags": [
+                        {
+                            "key": "value",
+                            "operator": "<",
+                            "value": "0"
+                        }
+                    ]
+                },
+                {
+                    "alias": "moving avg über 5 4 wochen perioden",
+                    "groupBy": [
+                        {
+                            "params": [
+                                "4w"
+                            ],
+                            "type": "time"
+                        }
+                    ],
+                    "hide": false,
+                    "measurement": "transaction",
+                    "orderByTime": "ASC",
+                    "policy": "default",
+                    "refId": "A",
+                    "resultFormat": "time_series",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "field"
+                            },
+                            {
+                                "params": [],
+                                "type": "sum"
+                            },
+                            {
+                                "params": [
+                                    "5"
+                                ],
+                                "type": "moving_average"
+                            }
+                        ]
+                    ],
+                    "tags": [
+                        {
+                            "key": "value",
+                            "operator": "<",
+                            "value": "0"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Ausgaben",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "currencyEUR",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": true,
             "dashLength": 10,
             "dashes": false,
             "datasource": "InfluxDB",
@@ -215,7 +390,7 @@
                 "h": 9,
                 "w": 23,
                 "x": 0,
-                "y": 6
+                "y": 16
             },
             "hiddenSeries": false,
             "id": 2,
@@ -372,7 +547,7 @@
                 "h": 20,
                 "w": 8,
                 "x": 0,
-                "y": 15
+                "y": 25
             },
             "id": 6,
             "pageSize": null,
@@ -513,7 +688,7 @@
                 "h": 21,
                 "w": 15,
                 "x": 8,
-                "y": 15
+                "y": 25
             },
             "id": 8,
             "links": [],
@@ -642,8 +817,8 @@
         "list": []
     },
     "time": {
-        "from": "2012-10-19T20:06:38.128Z",
-        "to": "2013-01-06T20:01:01.001Z"
+        "from": "2011-12-31T23:00:00.000Z",
+        "to": "now"
     },
     "timepicker": {
         "refresh_intervals": [
@@ -665,5 +840,5 @@
     "variables": {
         "list": []
     },
-    "version": 28
+    "version": 6
 }

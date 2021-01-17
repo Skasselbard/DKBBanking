@@ -245,7 +245,7 @@
             "renderer": "flot",
             "seriesOverrides": [
                 {
-                    "alias": "moving avg über 5 4 wochen perioden",
+                    "alias": "moving avg über fünf 30 tage perioden",
                     "bars": false,
                     "lines": true
                 }
@@ -255,11 +255,11 @@
             "steppedLine": false,
             "targets": [
                 {
-                    "alias": "4 wochen ausgaben",
+                    "alias": "30 tage ausgaben",
                     "groupBy": [
                         {
                             "params": [
-                                "4w"
+                                "30d"
                             ],
                             "type": "time"
                         }
@@ -268,6 +268,8 @@
                     "measurement": "transaction",
                     "orderByTime": "ASC",
                     "policy": "default",
+                    "query": "SELECT sum(\"value\") FROM \"transaction\" WHERE \"value\" < 0 AND $timeFilter GROUP BY time(30d) DROP MEASUREMENT * WHERE \"tag(reference)\" <> 'DKB VISACARD'",
+                    "rawQuery": false,
                     "refId": "B",
                     "resultFormat": "time_series",
                     "select": [
@@ -289,15 +291,21 @@
                             "key": "value",
                             "operator": "<",
                             "value": "0"
+                        },
+                        {
+                            "condition": "AND",
+                            "key": "reference",
+                            "operator": "!=",
+                            "value": "DKB VISACARD"
                         }
                     ]
                 },
                 {
-                    "alias": "moving avg über 5 4 wochen perioden",
+                    "alias": "moving avg über fünf 30 tage perioden",
                     "groupBy": [
                         {
                             "params": [
-                                "4w"
+                                "30d"
                             ],
                             "type": "time"
                         }
@@ -333,6 +341,12 @@
                             "key": "value",
                             "operator": "<",
                             "value": "0"
+                        },
+                        {
+                            "condition": "AND",
+                            "key": "reference",
+                            "operator": "!=",
+                            "value": "DKB VISACARD"
                         }
                     ]
                 }
@@ -817,8 +831,8 @@
         "list": []
     },
     "time": {
-        "from": "2011-12-31T23:00:00.000Z",
-        "to": "now"
+        "from": "2012-12-31T23:00:00.000Z",
+        "to": "2020-12-31T22:59:59.000Z"
     },
     "timepicker": {
         "refresh_intervals": [
@@ -840,5 +854,5 @@
     "variables": {
         "list": []
     },
-    "version": 6
+    "version": 11
 }

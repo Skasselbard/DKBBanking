@@ -43,11 +43,11 @@ def check_database():
         c.create_database(db)
 
 
-def write_konto_entries(document):
+def write_konto_entries(client, document):
     entries = []
     for entry in document.get_entrys():
         entries.append(entry.to_json(document.statement_number))
-    get_client().write_points(entries)
+    client.write_points(entries)
 
 
 def drop_db():
@@ -76,7 +76,7 @@ def parse_and_write(folder, file_pattern=None):
         file = os.path.join(folder, file)
         if re.search(file_pattern, file):
             doc = Document(file)
-            write_konto_entries(doc)
+            write_konto_entries(client, doc)
             # remember the chronologically first document for an initial balance
             if first_year == None or doc.year < first_year or (first_year == doc.year and doc.statement_number < first_statement_number):
                 first_year = doc.year
